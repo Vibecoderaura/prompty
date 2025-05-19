@@ -15,7 +15,7 @@ if st.button("✍️ Generate Prompt"):
         st.warning("Please fill in both fields above.")
     else:
         prompt = f"""
-You are a professional resume writer. Use the job description and the candidate’s background below to rewrite the CV so it aligns with the job, sounds professional,doesn't just match everything in the job description but uses actual things that support the description, doesn't use long dashes anywhere in the text and feels natural—not AI-generated.
+You are a professional resume writer. Use the job description and the candidate’s background below to rewrite the CV so it aligns with the job, sounds professional,doesn't just match everything in the job description but uses actual things that support the description, doesn't use long dashes anywhere in the text, don't use more than three words next to each other taken dircetly from the job description and feels natural—not AI-generated.
 
 Job Description:
 \"\"\"{job_description}\"\"\"
