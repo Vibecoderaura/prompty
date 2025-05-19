@@ -1,39 +1,56 @@
 import streamlit as st
 
-st.set_page_config(page_title="CV Prompt Generator", layout="centered")
+st.set_page_config(page_title="Professional CV Prompt Generator", page_icon="📝", layout="centered")
 
-st.title("🔍 Job Description → CV Prompt Generator")
-st.write("Craft a strong AI prompt to tailor your CV to the job — without sounding robotic or using a soup of jargon.")
+st.title("📝 CV Prompt Generator Access")
 
-# --- Inputs ---
-job_description = st.text_area("📄 Paste the job description", height=300)
-user_cv = st.text_area("👤 Paste a short version of your CV or background", height=200)
+st.markdown("""
+## Get a CV prompt that sounds **professional and human-written**, not like AI.
 
-# --- Generate Prompt ---
-if st.button("✍️ Generate Prompt"):
-    if not job_description or not user_cv:
-        st.warning("Please fill in both fields above.")
-    else:
-        prompt = f"""
-You are a professional resume writer. Use the job description and the candidate’s background below to rewrite the CV so it aligns with the job, sounds professional,doesn't just match everything in the job description but uses actual things that support the description, doesn't use long dashes anywhere in the text, don't use more than three words next to each other taken dircetly from the job description and feels natural—not AI-generated.
+Avoid robotic, generic CVs. Our custom prompt generator creates:
+- Naturally phrased, structured prompts
+- Tailored to your background and the job description
+- Ready to use with tools like ChatGPT to generate high-quality CV content
 
-Job Description:
-\"\"\"{job_description}\"\"\"
+---
 
-Candidate Background:
-\"\"\"{user_cv}\"\"\"
+### 💳 Subscription Details
 
-Instructions:
-- Focus on matching relevant skills/keywords naturally.
-- Emphasize achievements, not just responsibilities.
-- Keep a human tone and avoid generic AI phrasing.
-- Do NOT make up anything—use only provided details.
+- **Price**: £2.99/month
+- **Access**: Full access to the CV Prompt Generator
+- **Delivery**: Once payment is confirmed, you'll receive access by email
 
-Return the full rewritten CV.
-"""
-        st.subheader("🎯 Copy this Prompt")
-        st.code(prompt, language="markdown")
-        st.success("Copy the above and paste it into ChatGPT, Claude, etc.")
+---
 
-st.markdown("---")
-st.caption("🚀 Made with Streamlit in GitHub Codespaces")
+### 🔒 Secure Payment via PayPal
+
+To get started, click the button below to make your payment securely through PayPal.
+
+**Important: Please include your email address in the "Notes" section of the PayPal form**  
+This is how we verify your purchase and send you access.
+
+""")
+
+# Replace this with your actual PayPal.me link or button link
+paypal_link = "https://paypal.me/GuessTheObject?country.x=GB&locale.x=en_GB/2.99"
+
+st.markdown(f"""
+[👉 Click here to pay £2.99 via PayPal]({paypal_link})
+""")
+
+st.markdown("""
+---
+
+### 📩 What happens next?
+
+1. You’ll receive a confirmation from PayPal
+2. We’ll verify your payment manually
+3. You’ll get a personal email with your access link
+
+_You’ll have access for 30 days. After that, you can repurchase if you want to continue using the service._
+
+""")
+
+st.info("If you don't receive access within 12 hours of payment, please email us at frankohemeng@googlemail.com")
+
+
