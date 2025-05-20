@@ -3,18 +3,21 @@ import gspread
 from google.oauth2.service_account import Credentials
 
 st.set_page_config(page_title="Enter Email to Access CV Generator", layout="centered")
-
 st.title("✅ Confirm Your Email")
-
 st.write("Thanks for your payment! Please enter your email below to access the CV Generator.")
 
-# Authenticate Google Sheets
+# Use secrets stored in Streamlit
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = Credentials.from_service_account_file("credentials.json", scopes=scope)
+
+# Use credentials directly from st.secrets
+creds = Credentials.from_service_account_info(
+    st.secrets["google_service_account"], scopes=scope
+)
+
 client = gspread.authorize(creds)
 
-# Connect to the Google Sheet (update name to match yours)
-sheet = client.open("CVPromptEmails").sheet1  # Make sure this Sheet exists
+# Connect to your Google Sheet
+sheet = client.open("CVPromptEmails").sheet1  # Make sure this sheet exists in your Google account
 
 email = st.text_input("Enter your email address")
 
