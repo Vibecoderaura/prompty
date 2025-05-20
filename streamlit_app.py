@@ -8,7 +8,7 @@ st.markdown("""
 ## Get naturally worded, professional CV prompts.
 
 **What you get**:
-- Prompts that sound **human-written**, not AI-generated
+- Prompts that create human like CV's, not obviously AI-generated
 - Well-structured, professional tone
 - Tailored for your experience and job description
 - Works perfectly with ChatGPT or other AI tools
