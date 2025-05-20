@@ -32,7 +32,7 @@ This is how we verify your purchase and send you access.
 """)
 
 # Replace this with your actual PayPal.me link or button link
-paypal_link = "https://paypal.me/GuessTheObject?country.x=GB&locale.x=en_GB/2.99"
+paypal_link = "https://paypal.me/GuessTheObject/2.99"
 
 st.markdown(f"""
 [👉 Click here to pay £2.99 via PayPal]({paypal_link})
