@@ -1,56 +1,49 @@
 import streamlit as st
 
-st.set_page_config(page_title="Professional CV Prompt Generator", page_icon="📝", layout="centered")
+# Configure Streamlit page
+st.set_page_config(page_title="CV Prompt Generator – Subscribe", page_icon="📝", layout="centered")
 
-st.title("📝 CV Prompt Generator Access")
+st.title("📝 Unlock the CV Prompt Generator")
 
 st.markdown("""
-## Get a CV prompt that sounds **professional and human-written**, not like AI.
+## Get naturally worded, professional CV prompts.
 
-Avoid robotic, generic CVs. Our custom prompt generator creates:
-- Naturally phrased, structured prompts
-- Tailored to your background and the job description
-- Ready to use with tools like ChatGPT to generate high-quality CV content
-
----
-
-### 💳 Subscription Details
-
-- **Price**: £2.99/month
-- **Access**: Full access to the CV Prompt Generator
-- **Delivery**: Once payment is confirmed, you'll receive access by email
+**What you get**:
+- Custom prompts for ChatGPT or other AI tools
+- Human-sounding, well-structured suggestions
+- Tailored for your background and job description
 
 ---
 
-### 🔒 Secure Payment via PayPal
+### 💳 Access Details
 
-To get started, click the button below to make your payment securely through PayPal.
+- **Price**: £2.99 (30-day access)
+- **Secure Payment**: PayPal (card payments accepted)
+- **Delivery**: You’ll be taken to the next step right after payment
 
-**Important: Please include your email address in the "Notes" section of the PayPal form**  
-This is how we verify your purchase and send you access.
+---
 
+### 👇 Click Below to Pay & Proceed
 """)
 
-# Replace this with your actual PayPal.me link or button link
-paypal_link = "https://paypal.me/GuessTheObject/2.99"
+# Replace this link with your actual PayPal *business* payment link that redirects to App 2
+paypal_link = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YOUR_BUTTON_ID"
 
 st.markdown(f"""
-[👉 Click here to pay £2.99 via PayPal]({paypal_link})
+[🔐 Pay £2.99 and Continue]({paypal_link})
 """)
 
 st.markdown("""
 ---
 
-### 📩 What happens next?
+### ✅ After Payment
+You’ll be redirected to a page where you:
+1. Enter your email to activate access
+2. Get a link to the CV Prompt Generator
+3. Must save/bookmark the link for future use
 
-1. You’ll receive a confirmation from PayPal
-2. We’ll verify your payment manually
-3. You’ll get a personal email with your access link
+---
 
-_You’ll have access for 30 days. After that, you can repurchase if you want to continue using the service._
-
+If you encounter issues, email **frankohemeng@googlemail.com** with your PayPal receipt.
 """)
-
-st.info("If you don't receive access within 12 hours of payment, please email us at frankohemeng@googlemail.com")
-
 
