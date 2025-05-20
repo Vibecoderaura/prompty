@@ -1,6 +1,5 @@
 import streamlit as st
 
-# Configure Streamlit page
 st.set_page_config(page_title="CV Prompt Generator – Subscribe", page_icon="📝", layout="centered")
 
 st.title("📝 Unlock the CV Prompt Generator")
@@ -9,41 +8,38 @@ st.markdown("""
 ## Get naturally worded, professional CV prompts.
 
 **What you get**:
-- Custom prompts for ChatGPT or other AI tools
-- Human-sounding, well-structured suggestions
-- Tailored for your background and job description
+- Prompts that sound **human-written**, not AI-generated
+- Well-structured, professional tone
+- Tailored for your experience and job description
+- Works perfectly with ChatGPT or other AI tools
 
 ---
 
 ### 💳 Access Details
 
-- **Price**: £2.99 (30-day access)
-- **Secure Payment**: PayPal (card payments accepted)
-- **Delivery**: You’ll be taken to the next step right after payment
+- **Price**: £2.99 for 30 days access
+- **Payment method**: PayPal (card accepted)
+- **Next step**: After payment, you’ll be redirected to enter your email to activate access
 
 ---
-
-### 👇 Click Below to Pay & Proceed
 """)
 
-# Replace this link with your actual PayPal *business* payment link that redirects to App 2
-paypal_link = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YOUR_BUTTON_ID"
+# Insert your working PayPal link
+paypal_button_url = "https://www.paypal.com/ncp/payment/WANYK2SZLQ9UG"
 
 st.markdown(f"""
-[🔐 Pay £2.99 and Continue]({paypal_link})
-""")
+## 👉 [Click here to pay £2.99 and continue]({paypal_button_url})
+""", unsafe_allow_html=True)
 
 st.markdown("""
 ---
 
-### ✅ After Payment
-You’ll be redirected to a page where you:
-1. Enter your email to activate access
-2. Get a link to the CV Prompt Generator
-3. Must save/bookmark the link for future use
+### 🔄 After Payment:
+1. You'll be **redirected to a form** to enter your email address.
+2. Once submitted, you’ll receive instant access to the prompt generator.
+3. You can **save the generator link** and reuse it for 30 days.
 
 ---
 
-If you encounter issues, email **frankohemeng@googlemail.com** with your PayPal receipt.
+If anything goes wrong, email: **frankohemeng@googlemail.com**
 """)
-
