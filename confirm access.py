@@ -2,17 +2,18 @@ import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
 import re
+import base64
 
 st.set_page_config(page_title="CV Prompt Generator Access", layout="centered")
 st.title("🔐 Confirm Email to Access CV Generator")
 
-# Session state for flow control
+# Session state
 if "access_granted" not in st.session_state:
     st.session_state.access_granted = False
 if "generated_prompt" not in st.session_state:
     st.session_state.generated_prompt = ""
 
-# Google Sheets authentication
+# Google Sheets auth
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 try:
     creds = Credentials.from_service_account_info(
@@ -24,7 +25,7 @@ except Exception:
     st.error("⚠️ Could not authenticate or access the email list. Please contact support.")
     st.stop()
 
-# Email verification step
+# Email access
 if not st.session_state.access_granted:
     email_input = st.text_input("Enter the email you used after payment")
 
@@ -33,7 +34,6 @@ if not st.session_state.access_granted:
             st.warning("Please enter your email.")
         else:
             email_input = email_input.strip().lower()
-
             if not re.match(r"[^@]+@[^@]+\.[^@]+", email_input):
                 st.warning("Please enter a valid email address.")
             else:
@@ -49,7 +49,7 @@ if not st.session_state.access_granted:
                 else:
                     st.error("❌ Email not found. Please make sure you entered the correct email.")
 
-# Prompt generator section
+# Prompt Generator
 if st.session_state.access_granted:
     st.markdown("### 🔍 Job Description → CV Prompt Generator")
     st.write("Craft better prompts to optimize your CV for the job — without sounding like a robot.")
@@ -61,8 +61,7 @@ if st.session_state.access_granted:
         if not job_description or not user_cv:
             st.warning("Please fill in both the job description and your CV.")
         else:
-            st.session_state.generated_prompt = f"""
-You are a professional resume writer. Based on the job description below and the candidate's background, tailor the CV to highlight the most relevant experiences and skills, making it ATS-friendly while sounding natural and human, not just copying the job description, not using 4 or more words next to each other in the job description directly in the CV, no long dashes and not overly AI-written or generic.
+            st.session_state.generated_prompt = f"""You are a professional resume writer. Based on the job description below and the candidate's background, tailor the CV to highlight the most relevant experiences and skills, making it ATS-friendly while sounding natural and human, not just copying the job description, not using 4 or more words next to each other in the job description directly in the CV, no long dashes and not overly AI-written or generic.
 
 Job Description:
 \"\"\"{job_description}\"\"\"
@@ -77,21 +76,38 @@ Instructions:
 - Make the writing sound real and personal, not machine-generated.
 - Do NOT fabricate anything; use only information from the CV.
 
-Return the full revised CV.
-"""
+Return the full revised CV."""
 
     if st.session_state.generated_prompt:
         st.subheader("🎯 AI Prompt You Can Use")
         st.code(st.session_state.generated_prompt, language="markdown")
 
-        # Copy to clipboard button with JS
-        copy_code = st.session_state.generated_prompt.replace("`", "\\`").replace("\n", "\\n")
-        st.markdown(f"""
-        <button onclick="navigator.clipboard.writeText(`{copy_code}`)"
-                style="background-color:#4CAF50;color:white;padding:10px 20px;border:none;border-radius:5px;cursor:pointer;">
-            📋 Copy Prompt to Clipboard
+        # Create a copy-to-clipboard button using base64 encoding
+        b64_prompt = base64.b64encode(st.session_state.generated_prompt.encode()).decode()
+        copy_button_html = f"""
+        <script>
+        function copyToClipboard(text) {{
+            navigator.clipboard.writeText(atob(text)).then(function() {{
+                alert('✅ Prompt copied to clipboard!');
+            }}, function(err) {{
+                alert('❌ Failed to copy prompt.');
+            }});
+        }}
+        </script>
+        <button onclick="copyToClipboard('{b64_prompt}')" style="
+            background-color:#4CAF50;
+            color:white;
+            padding:10px 20px;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+            margin-top:10px;
+        ">
+        📋 Copy Prompt to Clipboard
         </button>
-        """, unsafe_allow_html=True)
+        """
+
+        st.markdown(copy_button_html, unsafe_allow_html=True)
 
         st.markdown(
             '<p style="margin-top:1em;"><a href="https://chat.openai.com" target="_blank">🚀 Open ChatGPT to Paste This Prompt</a></p>',
@@ -99,3 +115,4 @@ Return the full revised CV.
         )
 
     st.markdown("---")
+
