@@ -82,33 +82,6 @@ Return the full revised CV."""
         st.subheader("🎯 AI Prompt You Can Use, copy and paste into chatGPT")
         st.code(st.session_state.generated_prompt, language="markdown")
 
-        # Create a copy-to-clipboard button using base64 encoding
-        b64_prompt = base64.b64encode(st.session_state.generated_prompt.encode()).decode()
-        copy_button_html = f"""
-        <script>
-        function copyToClipboard(text) {{
-            navigator.clipboard.writeText(atob(text)).then(function() {{
-                alert('✅ Prompt copied to clipboard!');
-            }}, function(err) {{
-                alert('❌ Failed to copy prompt.');
-            }});
-        }}
-        </script>
-        <button onclick="copyToClipboard('{b64_prompt}')" style="
-            background-color:#4CAF50;
-            color:white;
-            padding:10px 20px;
-            border:none;
-            border-radius:5px;
-            cursor:pointer;
-            margin-top:10px;
-        ">
-        📋 Copy Prompt to Clipboard
-        </button>
-        """
-
-        st.markdown(copy_button_html, unsafe_allow_html=True)
-
         st.markdown(
             '<p style="margin-top:1em;"><a href="https://chat.openai.com" target="_blank">🚀 Open ChatGPT to Paste This Prompt</a></p>',
             unsafe_allow_html=True
