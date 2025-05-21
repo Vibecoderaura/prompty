@@ -6,7 +6,7 @@ import re
 st.set_page_config(page_title="CV Prompt Generator Access", layout="centered")
 st.title("🔐 Confirm Email to Access CV Generator")
 
-# Authenticate using Streamlit secrets
+# Authenticate with Google Sheets using Streamlit secrets
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 try:
     creds = Credentials.from_service_account_info(
@@ -18,7 +18,7 @@ except Exception as e:
     st.error("⚠️ Could not authenticate or access the email list. Please contact support.")
     st.stop()
 
-# Email input from user
+# Email input
 email_input = st.text_input("Enter the email you used after payment")
 
 if st.button("Access Generator"):
@@ -39,18 +39,40 @@ if st.button("Access Generator"):
             if email_input in emails:
                 st.success("✅ Access granted!")
                 st.markdown("### 🎯 CV Prompt Generator")
+                st.write("Craft better prompts to optimize your CV for the job — without sounding like a robot.")
 
-                job_title = st.text_input("Job Title")
-                background = st.text_area("Your Professional Background")
+                job_description = st.text_area("📄 Paste the job description", height=300)
+                user_cv = st.text_area("👤 Paste a short version of your CV or background", height=200)
 
-                if st.button("Generate Prompt"):
-                    if job_title and background:
-                        st.write("Here's your custom prompt:")
-                        st.code(
-                            f"Write a professional CV for a {job_title} based on the following background:\n{background}"
-                        )
+                if st.button("✍️ Generate Prompt"):
+                    if not job_description or not user_cv:
+                        st.warning("Please fill in both the job description and your CV.")
                     else:
-                        st.warning("Please fill out both fields to generate a prompt.")
+                        st.subheader("🎯 AI Prompt You Can Use")
+                        prompt = f"""
+You are a professional resume writer. Based on the job description below and the candidate's background, tailor the CV to highlight the most relevant experiences and skills, making it ATS-friendly while sounding natural and human, not just copying the job description, not using 4 or more words next to each other in the job description directly in the CV — not overly AI-written or generic.
+
+Job Description:
+\"\"\"{job_description}\"\"\"
+
+Candidate Background:
+\"\"\"{user_cv}\"\"\"
+
+Instructions:
+- Focus on matching language from the job description subtly.
+- Highlight achievements over responsibilities.
+- Use a professional tone that reflects the candidate's industry.
+- Make the writing sound real and personal, not machine-generated.
+- Do NOT fabricate anything; use only information from the CV.
+
+Return the full revised CV.
+"""
+                        st.code(prompt, language="markdown")
+                        st.success("Copy this prompt into ChatGPT, Claude, or your preferred AI!")
+
+                st.markdown("---")
+                st.caption("Crafted with ❤️ by your AI assistant")
+
             else:
                 st.error("❌ Email not found. Please make sure you entered the correct email.")
 
