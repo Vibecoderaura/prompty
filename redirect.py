@@ -17,14 +17,15 @@ creds = Credentials.from_service_account_info(
 client = gspread.authorize(creds)
 
 # Connect to your Google Sheet
-sheet = client.open("CVPromptEmails").sheet1  # Make sure this sheet exists in your Google account
+sheet = client.open("CVPromptEmails").sheet1
 
 email = st.text_input("Enter your email address")
 
 if st.button("Continue"):
     if email:
         sheet.append_row([email])
-        st.success("✅ Email saved. Redirecting you to the next page...")
-        st.markdown(f"[Click here to continue](https://your-app-url/confirm_access)")
+        st.success("✅ Email saved.")
+        st.markdown("➡️ [Click here to continue to the CV Generator](https://confirmation.streamlit.app/confirm_access)")
     else:
         st.warning("Please enter a valid email.")
+
