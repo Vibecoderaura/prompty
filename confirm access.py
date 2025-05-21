@@ -79,7 +79,7 @@ Instructions:
 Return the full revised CV."""
 
     if st.session_state.generated_prompt:
-        st.subheader("🎯 AI Prompt You Can Use, copy and paste into chatGPT")
+        st.subheader("🎯 AI Prompt You Can Use, click top right corner or prompt text box to copy")
         st.code(st.session_state.generated_prompt, language="markdown")
 
         st.markdown(
