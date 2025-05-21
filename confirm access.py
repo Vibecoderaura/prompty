@@ -6,11 +6,13 @@ import re
 st.set_page_config(page_title="CV Prompt Generator Access", layout="centered")
 st.title("🔐 Confirm Email to Access CV Generator")
 
-# Initialize session state
+# Session state for flow control
 if "access_granted" not in st.session_state:
     st.session_state.access_granted = False
+if "generated_prompt" not in st.session_state:
+    st.session_state.generated_prompt = ""
 
-# Authenticate Google Sheets
+# Google Sheets authentication
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 try:
     creds = Credentials.from_service_account_info(
@@ -22,7 +24,7 @@ except Exception:
     st.error("⚠️ Could not authenticate or access the email list. Please contact support.")
     st.stop()
 
-# Email confirmation section
+# Email verification step
 if not st.session_state.access_granted:
     email_input = st.text_input("Enter the email you used after payment")
 
@@ -42,8 +44,8 @@ if not st.session_state.access_granted:
                     st.stop()
 
                 if email_input in emails:
-                    st.success("✅ Access granted!")
                     st.session_state.access_granted = True
+                    st.success("✅ Access granted!")
                 else:
                     st.error("❌ Email not found. Please make sure you entered the correct email.")
 
@@ -59,7 +61,7 @@ if st.session_state.access_granted:
         if not job_description or not user_cv:
             st.warning("Please fill in both the job description and your CV.")
         else:
-            prompt = f"""
+            st.session_state.generated_prompt = f"""
 You are a professional resume writer. Based on the job description below and the candidate's background, tailor the CV to highlight the most relevant experiences and skills, making it ATS-friendly while sounding natural and human, not just copying the job description, not using 4 or more words next to each other in the job description directly in the CV, no long dashes and not overly AI-written or generic.
 
 Job Description:
@@ -77,18 +79,23 @@ Instructions:
 
 Return the full revised CV.
 """
-            st.subheader("🎯 AI Prompt You Can Use")
-            st.code(prompt, language="markdown")
 
-            st.download_button(
-                label="📋 Copy Prompt to Clipboard",
-                data=prompt.strip(),
-                file_name="cv_prompt.txt",
-                mime="text/plain"
-            )
+    if st.session_state.generated_prompt:
+        st.subheader("🎯 AI Prompt You Can Use")
+        st.code(st.session_state.generated_prompt, language="markdown")
 
-            st.markdown(
-                "[🚀 Open ChatGPT to Use This Prompt](https://chat.openai.com/)", unsafe_allow_html=True
-            )
+        # Copy to clipboard button with JS
+        copy_code = st.session_state.generated_prompt.replace("`", "\\`").replace("\n", "\\n")
+        st.markdown(f"""
+        <button onclick="navigator.clipboard.writeText(`{copy_code}`)"
+                style="background-color:#4CAF50;color:white;padding:10px 20px;border:none;border-radius:5px;cursor:pointer;">
+            📋 Copy Prompt to Clipboard
+        </button>
+        """, unsafe_allow_html=True)
+
+        st.markdown(
+            '<p style="margin-top:1em;"><a href="https://chat.openai.com" target="_blank">🚀 Open ChatGPT to Paste This Prompt</a></p>',
+            unsafe_allow_html=True
+        )
 
     st.markdown("---")
