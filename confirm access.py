@@ -71,8 +71,7 @@ Return the full revised CV.
                         st.success("Copy this prompt into ChatGPT, Claude, or your preferred AI!")
 
                 st.markdown("---")
-                st.caption("Crafted with ❤️ by your AI assistant")
-
+                
             else:
                 st.error("❌ Email not found. Please make sure you entered the correct email.")
 
