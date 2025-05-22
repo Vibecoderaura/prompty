@@ -2,7 +2,6 @@ import streamlit as st
 import gspread
 from google.oauth2.service_account import Credentials
 import re
-import base64
 
 st.set_page_config(page_title="CV Prompt Generator Access", layout="centered")
 st.title("🔐 Confirm Email to Access CV Generator")
@@ -61,25 +60,14 @@ if st.session_state.access_granted:
         if not job_description or not user_cv:
             st.warning("Please fill in both the job description and your CV.")
         else:
-            st.session_state.generated_prompt = f"""You are a professional resume writer. Based on the job description below and the candidate's background, tailor the CV to highlight the most relevant experiences and skills, making it ATS-friendly while sounding natural and human, not just copying the job description, not using 4 or more words next to each other in the job description directly in the CV, no long dashes and not overly AI-written or generic.
-
-Job Description:
-\"\"\"{job_description}\"\"\"
-
-Candidate Background:
-\"\"\"{user_cv}\"\"\"
-
-Instructions:
-- Focus on matching language from the job description subtly.
-- Highlight achievements over responsibilities.
-- Use a professional tone that reflects the candidate's industry.
-- Make the writing sound real and personal, not machine-generated.
-- Do NOT fabricate anything; use only information from the CV.
-
-Return the full revised CV."""
+            prompt_template = st.secrets["prompt"]["cv_rewrite"]
+            st.session_state.generated_prompt = prompt_template.format(
+                job_description=job_description,
+                user_cv=user_cv
+            )
 
     if st.session_state.generated_prompt:
-        st.subheader("🎯 AI Prompt You Can Use, click top right corner or prompt text box to copy")
+        st.subheader("🎯 AI Prompt You Can Use")
         st.code(st.session_state.generated_prompt, language="markdown")
 
         st.markdown(
