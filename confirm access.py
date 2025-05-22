@@ -67,7 +67,7 @@ if st.session_state.access_granted:
             )
 
     if st.session_state.generated_prompt:
-        st.subheader("🎯 AI Prompt You Can Use")
+        st.subheader("🎯 AI Prompt You Can Use, click top right corner of prompt text box to copy")
         st.code(st.session_state.generated_prompt, language="markdown")
 
         st.markdown(
